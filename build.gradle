@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
+}
+
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+shadowJar{
+    archiveBaseName = 'stock-exchange-application-1.0-shadow.jar'
+    manifest {
+        attributes(
+                'Main-Class': 'org.example.Main'
+        )
+    }
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'org.example.Main'
+        )
+    }
+    archiveBaseName = 'stock-exchange-application'
+    archiveVersion = '1.0'
+}
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+application {
+    // Define the main class for the application.
+    mainClass = 'org.example.Main'
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+    implementation 'org.postgresql:postgresql:42.2.27'
+    // org.hibernate.validator
+    implementation group: 'javax.validation', name:'validation-api', version: '2.0.1.Final'
+    implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.0.21.Final'
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.3.27.Final'
+    implementation group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.0.Final'
+//    implementation 'javax.persistence:javax.persistence-api:2.2'
+
+}
+
+test {
+    useJUnitPlatform()
+}
